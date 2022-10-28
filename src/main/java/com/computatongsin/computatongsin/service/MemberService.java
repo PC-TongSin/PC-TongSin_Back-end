@@ -115,4 +115,12 @@ public class MemberService implements UserDetailsService {
             return ResponseDto.success("사용할 수 있는 아이디 입니다");
         }
     }
+
+    public ResponseDto<?> duplicateCheckNickname(String nickname) {
+        if (memberRepository.existsByNickname(nickname))
+            return ResponseDto.fail("400", "중복된 닉네임입니다");
+        else {
+            return ResponseDto.success("사용할 수 있는 닉네임 입니다");
+        }
+    }
 }
