@@ -1,5 +1,6 @@
 package com.computatongsin.computatongsin.entity;
 
+import com.computatongsin.computatongsin.dto.req.MypageRequestDto;
 import com.computatongsin.computatongsin.security.Authority;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -49,5 +50,9 @@ public class Member extends Timestamped {
         this.password = password;
         this.nickname = nickname;
         this.authority = authority;
+    }
+
+    public void update(MypageRequestDto mypageRequestDto) {
+        this.nickname = mypageRequestDto.getNickname();
     }
 }

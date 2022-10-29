@@ -1,6 +1,7 @@
 package com.computatongsin.computatongsin.service;
 
 import com.computatongsin.computatongsin.dto.ResponseDto;
+import com.computatongsin.computatongsin.dto.req.MypageRequestDto;
 import com.computatongsin.computatongsin.dto.res.MyPageBoardResDto;
 import com.computatongsin.computatongsin.entity.Board;
 import com.computatongsin.computatongsin.entity.Heart;
@@ -100,6 +101,18 @@ public class MyPageService {
         }
 
         return ResponseDto.success(myPageBoardResDtos);
+    }
+
+    //개인정보 수정하기 (비밀번호, 닉네임)
+    //권한
+    @Transactional
+    public ResponseDto<?> userinfoModify(MypageRequestDto mypageRequestDto, Member member) {
+        Member memberInfo = memberRepository.findByUsername(member.getUsername()).orElseThrow(
+                () ->new RuntimeException("해당 사용자가 없습니다."));
+
+        memberInfo.update(mypageRequestDto);
+        memberRepository.save(memberInfo);
+        return ResponseDto.success("개인정보 수정 완료");
     }
 
 }

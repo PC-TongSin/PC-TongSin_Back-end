@@ -1,6 +1,8 @@
 package com.computatongsin.computatongsin.controller;
 
 import com.computatongsin.computatongsin.dto.ResponseDto;
+import com.computatongsin.computatongsin.dto.req.MypageRequestDto;
+import com.computatongsin.computatongsin.entity.Member;
 import com.computatongsin.computatongsin.security.MemberDetails;
 import com.computatongsin.computatongsin.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -78,4 +80,13 @@ public class MyPageController {
         String nickname = memberDetails.getMember().getNickname();
         return ResponseDto.success(nickname);
     }
+
+    // 현재 유저의 닉네임 수정
+    @PutMapping("/modified")
+    public ResponseDto<?> userinfoModify(
+            @RequestBody MypageRequestDto mypageRequestDto,
+            @AuthenticationPrincipal MemberDetails memberDetails) {
+        return myPageService.userinfoModify(mypageRequestDto, memberDetails.getMember());
+    }
+
 }
