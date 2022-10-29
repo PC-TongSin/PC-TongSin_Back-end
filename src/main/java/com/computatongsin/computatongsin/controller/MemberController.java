@@ -37,14 +37,14 @@ public class MemberController {
     }
 
     // 아이디 중복확인
-    @PostMapping("/checkid")
+    @PostMapping("/check-id")
     public ResponseDto<?> checkId(@RequestBody CheckidDto checkidDto) {
         return memberService.duplicateCheckId(checkidDto.getUsername());
     }
 
     // 닉네임 중복확인
-    @PostMapping("/checknickname")
-    public ResponseDto<?> checknickname(@RequestBody CheckNicknameDto checkNicknameDto) {
+    @PostMapping("/check-nickname")
+    public ResponseDto<?> checkNickname(@RequestBody CheckNicknameDto checkNicknameDto) {
         return memberService.duplicateCheckNickname(checkNicknameDto.getNickname());
     }
 }
