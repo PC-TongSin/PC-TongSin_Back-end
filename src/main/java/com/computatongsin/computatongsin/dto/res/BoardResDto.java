@@ -19,6 +19,8 @@ public class BoardResDto {
     private String content;
     private String author;
 
+    private long hit;
+
     public BoardResDto(Board board) {
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
@@ -28,5 +30,6 @@ public class BoardResDto {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.author = board.getAuthor();
+        this.hit = board.getHit();
     }
 }
