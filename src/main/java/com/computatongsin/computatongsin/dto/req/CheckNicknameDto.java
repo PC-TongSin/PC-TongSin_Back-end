@@ -1,4 +1,4 @@
-package com.computatongsin.computatongsin.controller;
+package com.computatongsin.computatongsin.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
