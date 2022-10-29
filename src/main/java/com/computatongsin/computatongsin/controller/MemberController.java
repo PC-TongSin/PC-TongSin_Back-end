@@ -2,10 +2,7 @@ package com.computatongsin.computatongsin.controller;
 
 import com.computatongsin.computatongsin.dto.ResponseDto;
 import com.computatongsin.computatongsin.dto.TokenDto;
-import com.computatongsin.computatongsin.dto.req.CheckidDto;
-import com.computatongsin.computatongsin.dto.req.LoginReqDto;
-import com.computatongsin.computatongsin.dto.req.SignupReqDto;
-import com.computatongsin.computatongsin.dto.req.TokenRequestDto;
+import com.computatongsin.computatongsin.dto.req.*;
 import com.computatongsin.computatongsin.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
