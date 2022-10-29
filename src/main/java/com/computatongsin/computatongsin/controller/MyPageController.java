@@ -67,14 +67,14 @@ public class MyPageController {
         return myPageService.getMyHeartPagerList(pageTemp,size,sortBy,isAsc, memberDetails.getMember());
     }
 
-    // 현재 유저의 ID 확인
+    // 현재 유저 정보 보내기
     @GetMapping("/userinfo/username")
     public ResponseDto<?> userinfo(@AuthenticationPrincipal MemberDetails memberDetails) {
         String username = memberDetails.getMember().getUsername();
         return ResponseDto.success(username);
     }
 
-    // 현재 유저의 닉네임 확인
+    // 현재 유저 닉네임 정보 보내기
     @GetMapping("/userinfo/nickname")
     public ResponseDto<?> userinfoNickname(@AuthenticationPrincipal MemberDetails memberDetails) {
         String nickname = memberDetails.getMember().getNickname();

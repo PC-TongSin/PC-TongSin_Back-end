@@ -42,4 +42,5 @@ public class CommentController {
             @AuthenticationPrincipal MemberDetails memberDetails) {
         return commentService.deleteComment(id, memberDetails.getMember());
     }
+
 }

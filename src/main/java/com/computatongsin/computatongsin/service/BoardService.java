@@ -8,6 +8,7 @@ import com.computatongsin.computatongsin.entity.Comments;
 import com.computatongsin.computatongsin.entity.Member;
 import com.computatongsin.computatongsin.repository.BoardRepository;
 import com.computatongsin.computatongsin.repository.CommentRepository;
+import com.computatongsin.computatongsin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,8 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+
+    private final MemberRepository memberRepository;
 
     // 게시판 전부 불러오기
     @Transactional

@@ -52,10 +52,10 @@ public class MemberService implements UserDetailsService {
         String passwordConfirm = signupReqDto.getPasswordConfirm();
         String nickname = signupReqDto.getNickname();
         if(memberRepository.existsByUsername(username)) {
-            throw new RuntimeException("이미 가입된 유저입니다");
+            return ResponseDto.fail(HttpStatus.BAD_REQUEST,"이미 존재하는 아이디 입니다.");
         }
         if(!password.equals(passwordConfirm)) {
-            throw new RuntimeException("비밀번호와 비밀번호 확인이 일치하지 않습니다");
+            return ResponseDto.fail(HttpStatus.BAD_REQUEST,"비밀번호와 비밀번호 확인이 일치하지 않습니다");
         }
         Member member = new Member(username, passwordEncoder.encode(password), nickname, Authority.ROLE_USER);
         return ResponseDto.success(memberRepository.save(member));
@@ -79,7 +79,7 @@ public class MemberService implements UserDetailsService {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, JwtFilter.BEARER_PREFIX + tokenDto.getAccessToken());
-        httpHeaders.add("Refresh-Token", tokenDto.getRefreshToken());
+        httpHeaders.add("RefreshToken", tokenDto.getRefreshToken());
 
         return new ResponseEntity<>(ResponseDto.success(member), httpHeaders, HttpStatus.OK);
     }
@@ -88,7 +88,7 @@ public class MemberService implements UserDetailsService {
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException(("Refresh Token이 유효하지 않습니다"));
+            throw new RuntimeException(("Refresh Token 유효하지 않습니다"));
         }
 
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
@@ -108,17 +108,19 @@ public class MemberService implements UserDetailsService {
         return tokenDto;
     }
 
+    // 아이디 중복 체크
     public ResponseDto<?> duplicateCheckId(String username) {
         if (memberRepository.existsByUsername(username))
-            return ResponseDto.fail("400", "중복된 아이디 값입니다");
+        return ResponseDto.fail(HttpStatus.BAD_REQUEST, "중복된 아이디 값입니다");
         else {
             return ResponseDto.success("사용할 수 있는 아이디 입니다");
         }
     }
 
+    // 닉네임 중복 체크
     public ResponseDto<?> duplicateCheckNickname(String nickname) {
         if (memberRepository.existsByNickname(nickname))
-            return ResponseDto.fail("400", "중복된 닉네임입니다");
+            return ResponseDto.fail(HttpStatus.BAD_REQUEST, "중복된 닉네임입니다");
         else {
             return ResponseDto.success("사용할 수 있는 닉네임 입니다");
         }

@@ -73,6 +73,8 @@ public class WebSecurityConfig {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 // CORS PUT, DELETE simple Request 제외한 요청 허용
                 .antMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                // 채팅 API 요청 허용
+                .antMatchers(HttpMethod.POST, "/chat/**").permitAll()
                 // 테스트용 S3 이미지 업로드 허용
                 .antMatchers(HttpMethod.POST, "/api/images/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/videos/**").permitAll()

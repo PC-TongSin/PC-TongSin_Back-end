@@ -18,7 +18,7 @@ public class HeartService {
     private final HeartRepository heartRepository;
 
     private final BoardRepository boardRepository;
-
+    // 널 믿어 안연일♡ 왜 하트 빨간색이노 ㅅㅂ
     @Transactional
     public ResponseDto<?> heart(Long boardId, Member member) {
 

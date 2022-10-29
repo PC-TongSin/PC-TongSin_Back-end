@@ -1,6 +1,7 @@
 package com.computatongsin.computatongsin.dto.res;
 
 import com.computatongsin.computatongsin.entity.Board;
+import com.computatongsin.computatongsin.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,9 @@ public class BoardResDto {
     private String title;
     private String content;
     private String author;
+    private long hit;
+
+    private String nickname;
 
     public BoardResDto(Board board) {
         this.createdAt = board.getCreatedAt();
@@ -28,5 +32,7 @@ public class BoardResDto {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.author = board.getAuthor();
+        this.hit = board.getHit();
+        this.nickname = board.getNickname();
     }
 }

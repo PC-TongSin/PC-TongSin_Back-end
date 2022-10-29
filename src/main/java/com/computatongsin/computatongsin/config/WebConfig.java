@@ -15,12 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // 전부 허용
                 .addMapping("/**")
                 .allowedOrigins("http://localhost:3000", "http://localhost:3001")
-                .allowedMethods(
-                        HttpMethod.GET.name(),
-                        HttpMethod.POST.name(),
-                        HttpMethod.PUT.name(),
-                        HttpMethod.DELETE.name()
-                )
+                .allowedMethods("GET","POST","PUT","DELETE")
                 .exposedHeaders("Authorization","Refresh-Token")
                 .allowCredentials(true);
     }

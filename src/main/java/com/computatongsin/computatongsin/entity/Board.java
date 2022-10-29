@@ -38,6 +38,9 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     private long hit = 0;
 
+    @Column(nullable = false)
+    private String nickname = "";
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
@@ -54,6 +57,7 @@ public class Board extends Timestamped {
         this.content = boardReqDto.getContent();
         this.author = member.getUsername();
         this.member = member;
+        this.nickname = member.getNickname();
     }
 
     public void update(BoardReqDto boardReqDto) {
