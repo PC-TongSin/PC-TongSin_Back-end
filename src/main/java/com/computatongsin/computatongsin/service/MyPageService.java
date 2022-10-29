@@ -27,7 +27,6 @@ public class MyPageService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
     private final HeartRepository heartRepository;
-    private final MemberRepository memberRepository;
 
     // 내 게시글 불러오기
     public ResponseDto<?> getMyBoardList(Member member) {

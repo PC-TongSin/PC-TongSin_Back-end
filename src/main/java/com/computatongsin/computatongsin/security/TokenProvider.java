@@ -1,5 +1,6 @@
 package com.computatongsin.computatongsin.security;
 
+import com.computatongsin.computatongsin.dto.ResponseDto;
 import com.computatongsin.computatongsin.dto.TokenDto;
 import com.computatongsin.computatongsin.entity.Member;
 import com.computatongsin.computatongsin.repository.MemberRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,7 +27,7 @@ public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000*60*30; // 밀리세컨드 30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000*60*30000000; // 밀리세컨드 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000*60*60*24*7; // 7일
 
     private final MemberRepository memberRepository;
@@ -48,9 +50,9 @@ public class TokenProvider {
 
         long nowTime = new Date().getTime();
 
-
+        // 액세스 토큰 생성
         Date accessTokenExpires = new Date(nowTime + ACCESS_TOKEN_EXPIRE_TIME);
-        String acessToken = Jwts.builder()
+        String accessToken = Jwts.builder()
                 // paload 부분에 필드, 값 넣기
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
@@ -58,6 +60,7 @@ public class TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
+        // 리프레쉬 토큰
         Date refreshTokenExpires = new Date(nowTime + REFRESH_TOKEN_EXPIRE_TIME);
         String refreshToken = Jwts.builder()
                 .setSubject(authentication.getName())
@@ -67,7 +70,7 @@ public class TokenProvider {
 
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
-                .accessToken(acessToken)
+                .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpires.getTime())
                 .refreshToken(refreshToken)
                 .build();

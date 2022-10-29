@@ -32,4 +32,5 @@ public class RestApiExceptionHandler {
 
         return new ResponseEntity<>(restApiException, HttpStatus.UNAUTHORIZED);
     }
+
 }

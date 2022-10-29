@@ -11,11 +11,11 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class SignupReqDto {
 
-    @Pattern(regexp = "^([0-9]|[a-z]|[A-Z]|-|_|@|\\.){3,40}$", message = "잘못된 아이디 형식입니다")
+    @Pattern(regexp="^[a-zA-Z0-9]{4,12}$", message = "닉네임은 최소 4자 이상, 12자 이하 알파벳 대소문자(a-z, A-Z), 숫자(0-9)로 구성됩니다.")
     @NotBlank(message = "이름을 입력해주세요")
     private String username;
 
-    @Pattern(regexp = "^([0-9]|[a-z]|[A-Z]){4,12}$", message = "잘못된 비밀번호 형식입니다")
+    @Pattern(regexp= "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$", message = "비밀번호는 최소 8자 이상, 20자 이하 알파벳 대소문자, 숫자(0-9), 특수문자로 구성됩니다.")
     @NotBlank(message = "비밀번호를 입력해주세요")
     private String password;
 

@@ -63,6 +63,7 @@ public class BoardController {
             @RequestBody @Valid BoardReqDto boardReqDto,
             @AuthenticationPrincipal MemberDetails memberDetails
             ) {
+        System.out.println(memberDetails.getMember().getNickname());
         return boardService.createBoard(boardReqDto, memberDetails.getMember());
     }
 
