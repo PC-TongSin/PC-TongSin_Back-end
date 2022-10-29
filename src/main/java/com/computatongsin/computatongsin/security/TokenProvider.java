@@ -25,7 +25,7 @@ public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000*60*30; // 밀리세컨드 30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000*60*3000000; // 임시로 인피니티 토큰
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000*60*60*24*7; // 7일
 
     private final MemberRepository memberRepository;
@@ -117,7 +117,7 @@ public class TokenProvider {
         } catch (PrematureJwtException e) {
             log.info("이 토큰은 아직 유효한 토큰이 아닙니다. 활성화 시기를 확인해 주십시오");
         } catch (ClaimJwtException e) {
-            log.info("Jwts의 PAYLOAD 분석에 실패했습니다");
+            log.info("JWT의 PAYLOAD 분석에 실패했습니다");
         }
         return false;
     }
