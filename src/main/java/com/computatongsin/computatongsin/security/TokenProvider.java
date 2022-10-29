@@ -50,8 +50,8 @@ public class TokenProvider {
 
 
         Date accessTokenExpires = new Date(nowTime + ACCESS_TOKEN_EXPIRE_TIME);
-        String acessToken = Jwts.builder()
-                // paload 부분에 필드, 값 넣기
+        String accessToken = Jwts.builder()
+                // payload 부분에 필드, 값 넣기
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpires)
@@ -67,7 +67,7 @@ public class TokenProvider {
 
         return TokenDto.builder()
                 .grantType(BEARER_TYPE)
-                .accessToken(acessToken)
+                .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpires.getTime())
                 .refreshToken(refreshToken)
                 .build();
