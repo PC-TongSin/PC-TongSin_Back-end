@@ -52,10 +52,10 @@ public class MemberService implements UserDetailsService {
         String passwordConfirm = signupReqDto.getPasswordConfirm();
         String nickname = signupReqDto.getNickname();
         if(memberRepository.existsByUsername(username)) {
-            return ResponseDto.fail("208","이미 존재하는 아이디입니다");
+            return ResponseDto.fail(HttpStatus.BAD_REQUEST,"이미 존재하는 아이디 입니다.");
         }
         if(!password.equals(passwordConfirm)) {
-            return ResponseDto.fail("403","비밀번호와 비밀번호 확인이 일치하지 않습니다");
+            return ResponseDto.fail(HttpStatus.BAD_REQUEST,"비밀번호와 비밀번호 확인이 일치하지 않습니다");
         }
         Member member = new Member(username, passwordEncoder.encode(password), nickname, Authority.ROLE_USER);
         return ResponseDto.success(memberRepository.save(member));
@@ -111,7 +111,7 @@ public class MemberService implements UserDetailsService {
     // 아이디 중복 체크
     public ResponseDto<?> duplicateCheckId(String username) {
         if (memberRepository.existsByUsername(username))
-            return ResponseDto.fail("400", "중복된 아이디 값입니다");
+        return ResponseDto.fail(HttpStatus.BAD_REQUEST, "중복된 아이디 값입니다");
         else {
             return ResponseDto.success("사용할 수 있는 아이디 입니다");
         }
@@ -120,7 +120,7 @@ public class MemberService implements UserDetailsService {
     // 닉네임 중복 체크
     public ResponseDto<?> duplicateCheckNickname(String nickname) {
         if (memberRepository.existsByNickname(nickname))
-            return ResponseDto.fail("400", "중복된 닉네임입니다");
+            return ResponseDto.fail(HttpStatus.BAD_REQUEST, "중복된 닉네임입니다");
         else {
             return ResponseDto.success("사용할 수 있는 닉네임 입니다");
         }

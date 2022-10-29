@@ -1,6 +1,5 @@
 package com.computatongsin.computatongsin.security;
 
-import com.computatongsin.computatongsin.dto.ResponseDto;
 import com.computatongsin.computatongsin.dto.TokenDto;
 import com.computatongsin.computatongsin.entity.Member;
 import com.computatongsin.computatongsin.repository.MemberRepository;
@@ -120,7 +119,7 @@ public class TokenProvider {
         } catch (PrematureJwtException e) {
             log.info("이 토큰은 아직 유효한 토큰이 아닙니다. 활성화 시기를 확인해 주십시오");
         } catch (ClaimJwtException e) {
-            log.info("Jwts의 PAYLOAD 분석에 실패했습니다");
+            log.info("JWT의 PAYLOAD 분석에 실패했습니다");
         }
         return false;
     }
