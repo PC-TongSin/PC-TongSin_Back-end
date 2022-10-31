@@ -4,6 +4,7 @@ import com.computatongsin.computatongsin.dto.ResponseDto;
 import com.computatongsin.computatongsin.dto.req.CommentReqDto;
 import com.computatongsin.computatongsin.dto.req.SimpleCommentReqDto;
 import com.computatongsin.computatongsin.dto.res.CommentResDto;
+import com.computatongsin.computatongsin.dto.res.MypageResponseDto;
 import com.computatongsin.computatongsin.entity.Board;
 import com.computatongsin.computatongsin.entity.Comments;
 import com.computatongsin.computatongsin.entity.Member;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +58,20 @@ public class CommentService {
         }
         commentRepository.deleteById(id);
         return ResponseDto.success("댓글 삭제 완료");
+    }
+
+    public ResponseDto<?> getCommentList(Member member) {
+        List<Comments> commentsList = commentRepository.findAllByOrderByCreatedAtDesc();
+        List<CommentResDto> commentResDtoList = new ArrayList<>();
+        for(Comments comments : commentsList){
+            CommentResDto commentResDto = new CommentResDto(comments);
+            commentResDtoList.add(commentResDto);
+        }
+        return ResponseDto.success(
+                MypageResponseDto.builder()
+                        .username(member.getNickname())
+                        .commentResDtoList(commentResDtoList)
+                        .build()
+        );
     }
 }
