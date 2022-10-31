@@ -28,7 +28,7 @@ public class MyPageController {
         return myPageService.getMyCommentList(memberDetails.getMember());
     }
 
-    // 내가 좋아요한 게시글 댓글 불러오기
+    // 내가 좋아요한 게시글 불러오기
     @GetMapping("/userheart")
     public ResponseDto<?> getMyHeartList(@AuthenticationPrincipal MemberDetails memberDetails) {
         return myPageService.getMyHeartList(memberDetails.getMember());

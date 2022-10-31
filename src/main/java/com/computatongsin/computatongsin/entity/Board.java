@@ -65,9 +65,6 @@ public class Board extends Timestamped {
         this.content = boardReqDto.getContent();
     }
 
-    public void updateCommentList(List<Comments> commentsList) {
-        this.commentList = commentsList;
-    }
 
     public void updateHit() {
         this.hit += 1;

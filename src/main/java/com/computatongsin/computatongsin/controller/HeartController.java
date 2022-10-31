@@ -14,9 +14,8 @@ public class HeartController {
 
     private final HeartService heartService;
 
-    @PostMapping("/hearts/{board_id}")
-    public ResponseDto<?> clickHeart(@PathVariable("board_id") Long boardId,
-                                     @AuthenticationPrincipal MemberDetails memberDetails) {
-        return heartService.heart(boardId, memberDetails.getMember());
+    @PostMapping("/hearts/{id}")
+    public ResponseDto<?> clickHeart(@PathVariable Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
+        return heartService.heart(id, memberDetails.getMember());
     }
 }

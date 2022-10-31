@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface HeartRepository extends JpaRepository<Heart, Long> {
-    boolean existsByBoardAndMember(Board boardId, Member member);
-    void deleteByBoardAndMember(Board boardId, Member member);
+    boolean existsByBoardAndMember(Board board, Member member);
+    void deleteByBoardAndMember(Board board, Member member);
     List<Heart> findAllByMember(Member member);
     Page<Heart> findAllByMember(Member member, Pageable pageable);
 }

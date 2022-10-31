@@ -26,7 +26,7 @@ public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000*60*30000000; // 밀리세컨드 30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L*60*30000000; // 밀리세컨드 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000*60*60*24*7; // 7일
 
     private final MemberRepository memberRepository;
@@ -111,15 +111,15 @@ public class TokenProvider {
                     return true;
 
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("JWT가 올바르게 구성되지 않았습니다");
+            log.info("JWT 올바르게 구성되지 않았습니다");
         } catch (ExpiredJwtException e) {
-            log.info("JWT의 유효시간이 초과되었습니다");
+            log.info("JWT 유효시간이 초과되었습니다");
         } catch (UnsupportedJwtException e) {
-            log.info("JWT의 형식이 일치 하지 않습니다");
+            log.info("JWT 형식이 일치 하지 않습니다");
         } catch (PrematureJwtException e) {
             log.info("이 토큰은 아직 유효한 토큰이 아닙니다. 활성화 시기를 확인해 주십시오");
         } catch (ClaimJwtException e) {
-            log.info("JWT의 PAYLOAD 분석에 실패했습니다");
+            log.info("JWT PAYLOAD 분석에 실패했습니다");
         }
         return false;
     }

@@ -1,11 +1,14 @@
 package com.computatongsin.computatongsin.dto.res;
 
 import com.computatongsin.computatongsin.entity.Board;
+import com.computatongsin.computatongsin.entity.Comments;
 import com.computatongsin.computatongsin.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -22,6 +25,13 @@ public class BoardResDto {
     private long hit;
 
     private String nickname;
+
+    // 읽기 전용
+    private List<CommentResDto> commentResDtoList = new ArrayList<>();
+
+    public void updateCommentList(List<CommentResDto> commentsList) {
+        this.commentResDtoList = commentsList;
+    }
 
     public BoardResDto(Board board) {
         this.createdAt = board.getCreatedAt();

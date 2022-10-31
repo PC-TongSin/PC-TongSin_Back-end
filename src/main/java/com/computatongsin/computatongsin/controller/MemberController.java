@@ -35,15 +35,15 @@ public class MemberController {
         return ResponseEntity.ok(memberService.reissue(tokenRequestDto));
     }
 
-    // 아이디 중복확인
-    @PostMapping("/check-id")
-    public ResponseDto<?> checkId(@RequestBody CheckidDto checkidDto) {
-        return memberService.duplicateCheckId(checkidDto.getUsername());
+    // 아이디 중복확인  /check-id?username=뭐쥬?  - 작대기 안됨
+    @GetMapping("/check_id")
+    public ResponseDto<?> checkId(@RequestParam String username) {
+        return memberService.duplicateCheckId(username);
     }
 
-    // 닉네임 중복확인
-    @PostMapping("/check-nickname")
-    public ResponseDto<?> checkNickname(@RequestBody CheckNicknameDto checkNicknameDto) {
-        return memberService.duplicateCheckNickname(checkNicknameDto.getNickname());
+    // 닉네임 중복확인 /check-id?nickname=뭐쥬?   - 작대기 안됨
+    @GetMapping("/check_nickname")
+    public ResponseDto<?> checkNickname(@RequestParam String nickname) {
+        return memberService.duplicateCheckNickname(nickname);
     }
 }

@@ -12,6 +12,7 @@ public class ChatRoom {
     private String roomId;      // 채팅방 아이디
     private String name;        // 채팅방 이름
     private Set<WebSocketSession> sessions = new HashSet<>();
+    // HashSet. HashTable, 중복 불허, 순서 X
 
     @Builder
     public ChatRoom(String roomId, String name) {
@@ -37,4 +38,5 @@ public class ChatRoom {
     private <T> void sendMessage(T message, ChatService service) {
         sessions.parallelStream().forEach(session -> service.sendMessage(session, message));
     }
+
 }

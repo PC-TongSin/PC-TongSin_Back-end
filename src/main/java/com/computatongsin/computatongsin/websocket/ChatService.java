@@ -33,6 +33,7 @@ public class ChatService {
      * 이 방법은 최종적이지 않아야 합니다.
      * 메서드가 확인되지 않은 예외를 throw하면 예외가 인터셉터에 의해 처리되는 경우를 제외하고 클래스를 서비스에 넣으면 안 됩니다.
      */
+
     @PostConstruct
     private void init() {
         chatRooms = new LinkedHashMap<>();
@@ -42,24 +43,30 @@ public class ChatService {
     public List<ChatRoom> findAllRoom() {
         return new ArrayList<>(chatRooms.values());
     }
-    
+
     // 채팅방 한개 찾기
     public ChatRoom findRoomById(String roomId) {
         return chatRooms.get(roomId);
     }
-    
+
     // 채팅방 만들기
     public ChatRoom createRoom(String name) {
-        String roomId = UUID.randomUUID().toString();       // 랜덤 방 아이디 생성
+
+        // 랜덤 방 아이디 생성
+        String roomId = UUID.randomUUID().toString();
 
         // 채팅룸 빌드
         ChatRoom room = ChatRoom.builder()
+                // 채팅룸 번호
                 .roomId(roomId)
+                // 채팅룸 이름
                 .name(name)
                 .build();
 
-        // 채팅룸 맵에 넣는다
+        // 채팅룸 맵에 넣는다 Map<String, ChatRoom> chatRooms;
+        // 위에서 만든 랜덤 아이디값을 키값으로 ChatRoom을 객체화한 값으로 맵으로 만든다
         chatRooms.put(roomId, room);
+        // 객체화된 ChatRoom 채팅룸 내부는 세션, 클라이언트로부터 받아온 역직렬화한 페이로드 메세지값이 들어간다
         return room;
     }
 
@@ -68,6 +75,7 @@ public class ChatService {
  * Java 값을 문자열로 직렬화하는 데 사용할 수 있는 메소드입니다. 기능적으로는 StringWriter로 writeValue(Writer, Object)를 호출하고 String을 구성하는 것과 동일하지만 더 효율적입니다.
  * 참고: 버전 2.1 이전에는 throws 절에 IOException이 포함되었습니다. 2.1 제거했습니다.
  */
+
     public <T> void sendMessage(WebSocketSession session, T message) {
         try{
             session.sendMessage(new TextMessage(mapper.writeValueAsString(message)));
@@ -75,5 +83,4 @@ public class ChatService {
             log.error(e.getMessage(), e);
         }
     }
-
 }

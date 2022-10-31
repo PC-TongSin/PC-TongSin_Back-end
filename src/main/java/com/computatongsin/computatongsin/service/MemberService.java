@@ -79,7 +79,7 @@ public class MemberService implements UserDetailsService {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, JwtFilter.BEARER_PREFIX + tokenDto.getAccessToken());
-        httpHeaders.add("RefreshToken", tokenDto.getRefreshToken());
+        httpHeaders.add("Refresh-Token", tokenDto.getRefreshToken());
 
         return new ResponseEntity<>(ResponseDto.success(member), httpHeaders, HttpStatus.OK);
     }
@@ -111,7 +111,7 @@ public class MemberService implements UserDetailsService {
     // 아이디 중복 체크
     public ResponseDto<?> duplicateCheckId(String username) {
         if (memberRepository.existsByUsername(username))
-        return ResponseDto.fail(HttpStatus.BAD_REQUEST, "중복된 아이디 값입니다");
+            return ResponseDto.fail(HttpStatus.BAD_REQUEST, "중복된 아이디 값입니다");
         else {
             return ResponseDto.success("사용할 수 있는 아이디 입니다");
         }

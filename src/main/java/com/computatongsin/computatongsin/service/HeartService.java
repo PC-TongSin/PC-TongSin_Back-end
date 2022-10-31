@@ -16,13 +16,12 @@ import javax.transaction.Transactional;
 public class HeartService {
 
     private final HeartRepository heartRepository;
-
     private final BoardRepository boardRepository;
-    // 널 믿어 안연일♡ 왜 하트 빨간색이노 ㅅㅂ
-    @Transactional
-    public ResponseDto<?> heart(Long boardId, Member member) {
 
-        Board board = boardRepository.findById(boardId).orElseThrow();
+    @Transactional
+    public ResponseDto<?> heart(Long id, Member member) {
+
+        Board board = boardRepository.findById(id).orElseThrow(()->new RuntimeException("게시글을 찾을 수 없습니다"));
 
         if(heartRepository.existsByBoardAndMember(board, member)){
             heartRepository.deleteByBoardAndMember(board, member);

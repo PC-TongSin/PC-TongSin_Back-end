@@ -76,11 +76,28 @@ public class BoardController {
         return boardService.editBoard(id, boardReqDto, memberDetails.getMember());
     }
 
-    //게시판 삭제 (권한 필요)
+    // 게시판 삭제 (권한 필요)
     @DeleteMapping("/boards/{id}")
     public ResponseDto<?> deleteBoard(
             @PathVariable Long id,
             @AuthenticationPrincipal MemberDetails memberDetails) {
         return boardService.deleteBoard(id, memberDetails.getMember());
+    }
+
+    // 검색 기능 (게시글 제목으로 검색)    /boards/search?title=String 변수 검색할 거
+    @GetMapping("/boards/search")
+    public ResponseDto<?> searchBoard(@RequestParam("title") String title) {
+        return boardService.searchBoard(title);
+    }
+
+    // 페이저로 타이틀로 검색하기 기능
+    @GetMapping("/boards/search/pager")
+    public ResponseDto<?> searchBoardPage(@RequestParam("title") String title,
+                                          @RequestParam("page") Integer page,
+                                          @RequestParam("size") Integer size,
+                                          @RequestParam("sortBy") String sortBy,
+                                          @RequestParam("isAsc") boolean isAsc) {
+        int pageTemp = page - 1;
+        return boardService.searchBoardPage(title, pageTemp, size, sortBy, isAsc);
     }
 }
