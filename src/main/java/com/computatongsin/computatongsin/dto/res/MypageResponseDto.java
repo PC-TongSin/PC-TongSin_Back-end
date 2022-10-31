@@ -19,7 +19,7 @@ public class MypageResponseDto {
 
     private List<String> writtenBoardList;
 
-    private List<String> writtenCommentList;
+    private List<CommentResDto> commentResDtoList;
 
     private List<String> heartList;
 

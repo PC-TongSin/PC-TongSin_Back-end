@@ -12,5 +12,6 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comments, Long> {
     List<Comments> findAllByBoard(Board board);
     List<Comments> findAllByMember(Member member);
+    List<Comments> findAllByOrderByCreatedAtDesc();
     Page<Comments> findAllByMember(Member member, Pageable pageable);
 }
