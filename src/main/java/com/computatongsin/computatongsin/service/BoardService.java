@@ -44,7 +44,32 @@ public class BoardService {
     // 게시판 전부 불러오기 (+댓글리스트)
     @Transactional
     public ResponseDto<?> getBoardListAndCommentList() {
-        return ResponseDto.success(boardRepository.findAllByOrderByIdDesc());
+
+        // 준비물
+        List<Board> boardList = boardRepository.findAllByOrderByIdDesc();
+        List<BoardResDto> boardResList = new ArrayList<>();
+
+        for (Board board:boardList) {
+            // 댓글 리스트는 계속 초기화 시켜줘야 한다
+            List<CommentResDto> commentResDtoList = new ArrayList<>();
+            // 꺼내온 게시글을 dto 에 담는다
+            BoardResDto boardResDto = new BoardResDto(board);
+            // 꺼내온 게시글로 댓글 리스트를 가져온다
+            List<Comments> commentsList = commentRepository.findAllByBoard(board);
+
+            for (Comments comment:commentsList) {
+                // 꺼내온 댓글을 dto 에 담는다
+                CommentResDto commentResDto = new CommentResDto(comment);
+                // dto 에 담은 댓글들을 댓글 res 리스트에 담는다
+                commentResDtoList.add(commentResDto);
+            }
+            // 댓글 dto 리스트에 담은 댓글들을 게시글 dto 에 담아준다
+            boardResDto.updateCommentList(commentResDtoList);
+            // 게시글 dto 리스트에 완료된 게시글들을 담아준다
+            boardResList.add(boardResDto);
+        }
+
+        return ResponseDto.success(boardResList);
     }
 
     // 게시판 페이저로 불러오기 (페이지네이션)
@@ -83,7 +108,9 @@ public class BoardService {
     // 게시판 생성
     public ResponseDto<?> createBoard(BoardReqDto boardReqDto, Member member) {
         Board board = new Board(boardReqDto, member);
-        return ResponseDto.success(boardRepository.save(board));
+        BoardResDto boardResDto = new BoardResDto(board);
+        boardRepository.save(board);
+        return ResponseDto.success(boardResDto);
     }
 
     // 권한

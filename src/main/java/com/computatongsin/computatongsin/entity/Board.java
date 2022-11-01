@@ -65,8 +65,8 @@ public class Board extends Timestamped {
         this.content = boardReqDto.getContent();
     }
 
-
     public void updateHit() {
         this.hit += 1;
     }
+
 }

@@ -14,6 +14,7 @@ public class HeartController {
 
     private final HeartService heartService;
 
+    // 좋아요 기능
     @PostMapping("/hearts/{id}")
     public ResponseDto<?> clickHeart(@PathVariable Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
         return heartService.heart(id, memberDetails.getMember());

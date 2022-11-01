@@ -36,13 +36,13 @@ public class MemberController {
     }
 
     // 아이디 중복확인  /check-id?username=뭐쥬?  - 작대기 안됨
-    @GetMapping("/check_id")
+    @GetMapping("/check-id")
     public ResponseDto<?> checkId(@RequestParam String username) {
         return memberService.duplicateCheckId(username);
     }
 
     // 닉네임 중복확인 /check-id?nickname=뭐쥬?   - 작대기 안됨
-    @GetMapping("/check_nickname")
+    @GetMapping("/check-nickname")
     public ResponseDto<?> checkNickname(@RequestParam String nickname) {
         return memberService.duplicateCheckNickname(nickname);
     }

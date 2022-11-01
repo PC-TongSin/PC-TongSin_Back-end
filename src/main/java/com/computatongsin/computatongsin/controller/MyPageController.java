@@ -19,19 +19,19 @@ public class MyPageController {
     // 마이 페이지
     
     // 내가 작성한 게시글 불러오기
-    @GetMapping("/userboard")
+    @GetMapping("/user-boards")
     public ResponseDto<?> getMyBoardList(@AuthenticationPrincipal MemberDetails memberDetails) {
         return myPageService.getMyBoardList(memberDetails.getMember());
     }
 
     // 내가 작성한 댓글 불러오기
-    @GetMapping("/usercomment")
+    @GetMapping("/user-comments")
     public ResponseDto<?> getMyCommentList(@AuthenticationPrincipal MemberDetails memberDetails) {
         return myPageService.getMyCommentList(memberDetails.getMember());
     }
 
     // 내가 좋아요한 게시글 불러오기
-    @GetMapping("/userheart")
+    @GetMapping("/user-hearts")
     public ResponseDto<?> getMyHeartList(@AuthenticationPrincipal MemberDetails memberDetails) {
         return myPageService.getMyHeartList(memberDetails.getMember());
     }
@@ -88,5 +88,4 @@ public class MyPageController {
             @AuthenticationPrincipal MemberDetails memberDetails) {
         return myPageService.userinfoModify(mypageRequestDto, memberDetails.getMember());
     }
-
 }

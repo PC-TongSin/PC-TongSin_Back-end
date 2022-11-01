@@ -3,6 +3,7 @@ package com.computatongsin.computatongsin.service;
 import com.computatongsin.computatongsin.dto.ResponseDto;
 import com.computatongsin.computatongsin.dto.TokenDto;
 import com.computatongsin.computatongsin.dto.req.LoginReqDto;
+import com.computatongsin.computatongsin.dto.req.MemberDto;
 import com.computatongsin.computatongsin.dto.req.SignupReqDto;
 import com.computatongsin.computatongsin.dto.req.TokenRequestDto;
 import com.computatongsin.computatongsin.entity.Member;
@@ -81,7 +82,10 @@ public class MemberService implements UserDetailsService {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, JwtFilter.BEARER_PREFIX + tokenDto.getAccessToken());
         httpHeaders.add("Refresh-Token", tokenDto.getRefreshToken());
 
-        return new ResponseEntity<>(ResponseDto.success(member), httpHeaders, HttpStatus.OK);
+        assert member != null;
+        MemberDto memberDto = new MemberDto(member);
+
+        return new ResponseEntity<>(ResponseDto.success(memberDto), httpHeaders, HttpStatus.OK);
     }
 
     // 토큰 재발급

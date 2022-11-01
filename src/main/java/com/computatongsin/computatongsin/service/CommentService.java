@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,18 +61,35 @@ public class CommentService {
         return ResponseDto.success("댓글 삭제 완료");
     }
 
-    public ResponseDto<?> getCommentList(Member member) {
-        List<Comments> commentsList = commentRepository.findAllByOrderByCreatedAtDesc();
+    // DB의 전체 댓글 조회
+    public ResponseDto<?> getCommentList() {
+        List<Comments> commentsList = commentRepository.findAllByOrderByIdDesc();
         List<CommentResDto> commentResDtoList = new ArrayList<>();
         for(Comments comments : commentsList){
             CommentResDto commentResDto = new CommentResDto(comments);
             commentResDtoList.add(commentResDto);
         }
-        return ResponseDto.success(
-                MypageResponseDto.builder()
-                        .username(member.getNickname())
-                        .commentResDtoList(commentResDtoList)
-                        .build()
-        );
+        return ResponseDto.success(commentResDtoList);
+    }
+
+    // 특정 게시글의 아이디로 댓글 리스트
+    @Transactional
+    public ResponseDto<?> getTargetBoardCommentList(Long id) {
+        // 준비물
+        Optional<Board> boardTemp = boardRepository.findById(id);
+        List<CommentResDto> commentResDtoList = new ArrayList<>();
+        // 게시글 null 체크
+        if (boardTemp.isEmpty()) {
+            return ResponseDto.fail("요청한 게시글의 아이디로 게시글을 찾을 수 없습니다");
+        }
+        // 체크 확인 후 Optional 해제
+        Board board = boardTemp.get();
+        // 댓글 List Dto 에 담아준다
+        List<Comments> commentsList = commentRepository.findAllByBoard(board);
+        for (Comments comments:commentsList) {
+            CommentResDto commentResDto = new CommentResDto(comments);
+            commentResDtoList.add(commentResDto);
+        }
+        return ResponseDto.success(commentResDtoList);
     }
 }

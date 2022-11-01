@@ -2,6 +2,7 @@ package com.computatongsin.computatongsin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
@@ -16,5 +17,4 @@ public class ResponseDto<T> {
     public static <T> ResponseDto<T> fail(T data) {
         return new ResponseDto<>(data);
     }
-
 }

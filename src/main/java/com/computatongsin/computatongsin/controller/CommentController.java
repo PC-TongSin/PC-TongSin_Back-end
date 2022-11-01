@@ -43,10 +43,15 @@ public class CommentController {
         return commentService.deleteComment(id, memberDetails.getMember());
     }
 
-
     // 댓글 불러오기
-    @GetMapping("/usercomments")
-    public ResponseDto<?> getCommentList(@AuthenticationPrincipal MemberDetails memberDetails) {
-        return commentService.getCommentList(memberDetails.getMember());
+    @GetMapping("/comments")
+    public ResponseDto<?> getCommentList() {
+        return commentService.getCommentList();
+    }
+
+    // 특정 게시글의 아이디로 댓글 리스트 주세요
+    @GetMapping("/{id}/comments")
+    public ResponseDto<?> getTargetBoardCommentList(@PathVariable Long id) {
+        return commentService.getTargetBoardCommentList(id);
     }
 }

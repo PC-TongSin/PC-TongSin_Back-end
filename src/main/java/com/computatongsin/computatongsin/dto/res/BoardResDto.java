@@ -23,10 +23,8 @@ public class BoardResDto {
     private String content;
     private String author;
     private long hit;
-
     private String nickname;
 
-    // 읽기 전용
     private List<CommentResDto> commentResDtoList = new ArrayList<>();
 
     public void updateCommentList(List<CommentResDto> commentsList) {
