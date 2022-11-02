@@ -4,19 +4,20 @@ import com.computatongsin.computatongsin.dto.ResponseDto;
 import com.computatongsin.computatongsin.dto.req.BoardReqDto;
 import com.computatongsin.computatongsin.dto.res.BoardResDto;
 import com.computatongsin.computatongsin.dto.res.CommentResDto;
+import com.computatongsin.computatongsin.dto.res.HeartNicknameResDto;
 import com.computatongsin.computatongsin.entity.Board;
 import com.computatongsin.computatongsin.entity.Comments;
+import com.computatongsin.computatongsin.entity.Heart;
 import com.computatongsin.computatongsin.entity.Member;
 import com.computatongsin.computatongsin.repository.BoardRepository;
 import com.computatongsin.computatongsin.repository.CommentRepository;
-import com.computatongsin.computatongsin.repository.MemberRepository;
+import com.computatongsin.computatongsin.repository.HeartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+
+    private final HeartRepository heartRepository;
 
     // 게시판 전부 불러오기
     @Transactional
@@ -77,7 +80,14 @@ public class BoardService {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseDto.success(boardRepository.findAll(pageable));
+
+        Page<Board> boardList = boardRepository.findAll(pageable);
+        List<BoardResDto> boardResDtos = new ArrayList<>();
+        for (Board board:boardList) {
+            BoardResDto boardResDto = new BoardResDto(board);
+            boardResDtos.add(boardResDto);
+        }
+        return ResponseDto.success(boardResDtos);
     }
 
     // 게시판 무한 스크롤로 불러오기
@@ -88,19 +98,31 @@ public class BoardService {
         return ResponseDto.success(boardRepository.findAllByOrderById(pageable));
     }
 
-    // 게시판 하나만 불러오기 (+해당 게시글 댓글) (+조회수 1 추가)    ex) 순환참조 문제로 dto에 담아줌
+    // 게시판 하나만 불러오기 (+해당 게시글 댓글) (+조회수 1 추가) (+해당 게시글 좋아요한 유저)
     @Transactional
     public ResponseDto<?> getBoard(Long id) {
+
         Board board = boardRepository.findById(id).orElseThrow(()->new RuntimeException("게시글을 찾을 수 없습니다"));
+
         board.updateHit();
+
         List<Comments> commentsList = commentRepository.findAllByBoard(board);
         List<CommentResDto> commentResDtoList = new ArrayList<>();
         for (Comments comments:commentsList) {
             CommentResDto commentResDtoTemp = new CommentResDto(comments);
             commentResDtoList.add(commentResDtoTemp);
         }
+
+        List<Heart> heartsList = heartRepository.findAllByBoard(board);
+        List<HeartNicknameResDto> heartNicknameResDtoList = new ArrayList<>();
+        for (Heart heart:heartsList) {
+            HeartNicknameResDto heartNicknameResDto = new HeartNicknameResDto(heart);
+            heartNicknameResDtoList.add(heartNicknameResDto);
+        }
+
         BoardResDto boardResDto = new BoardResDto(board);
         boardResDto.updateCommentList(commentResDtoList);
+        boardResDto.updateHeartList(heartNicknameResDtoList);
         return ResponseDto.success(boardResDto);
     }
 

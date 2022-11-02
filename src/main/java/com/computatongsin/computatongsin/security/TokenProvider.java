@@ -12,13 +12,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.computatongsin.computatongsin.security.JwtFilter.BEARER_PREFIX;
 
 @Slf4j
 @Component
@@ -122,5 +126,36 @@ public class TokenProvider {
             log.info("JWT PAYLOAD 분석에 실패했습니다");
         }
         return false;
+    }
+
+    // Security 에서 인증 유저 정보 가져오기
+    public String getMemberNicknameInToken(String accessTokenTemp) {
+
+        if(!StringUtils.hasText(accessTokenTemp) && accessTokenTemp.startsWith(BEARER_PREFIX)) {
+            throw new RuntimeException("토큰에 아무것두 없어유");
+        }
+        String accessToken =  accessTokenTemp.substring(7);
+
+        Claims claims = parseClaims(accessToken);
+
+        if (claims.get(AUTHORITIES_KEY) == null) {
+            throw new RuntimeException("권한 정보가 없는 토큰입니다");
+        }
+
+        String username = claims.getSubject();
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username + "라는 유저가 없습니다"));
+
+        return member.getNickname();
+    }
+
+    public String getMemberFromAuthentication() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Member> memberTemp = memberRepository.findByUsername(authentication.getName());
+        if (memberTemp.isEmpty()) {
+            throw new RuntimeException();
+        }
+        Member member = memberTemp.get();
+        return member.getNickname();
     }
 }

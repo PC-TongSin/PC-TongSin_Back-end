@@ -14,4 +14,5 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     void deleteByBoardAndMember(Board board, Member member);
     List<Heart> findAllByMember(Member member);
     Page<Heart> findAllByMember(Member member, Pageable pageable);
+    List<Heart> findAllByBoard(Board board);
 }

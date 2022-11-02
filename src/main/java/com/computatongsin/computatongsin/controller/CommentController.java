@@ -49,7 +49,7 @@ public class CommentController {
         return commentService.getCommentList();
     }
 
-    // 특정 게시글의 아이디로 댓글 리스트 주세요
+    // 특정 게시글의 아이디로 댓글 리스트 불러오기
     @GetMapping("/{id}/comments")
     public ResponseDto<?> getTargetBoardCommentList(@PathVariable Long id) {
         return commentService.getTargetBoardCommentList(id);

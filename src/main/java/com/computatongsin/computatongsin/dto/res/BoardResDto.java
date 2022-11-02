@@ -1,8 +1,6 @@
 package com.computatongsin.computatongsin.dto.res;
 
 import com.computatongsin.computatongsin.entity.Board;
-import com.computatongsin.computatongsin.entity.Comments;
-import com.computatongsin.computatongsin.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,9 +24,14 @@ public class BoardResDto {
     private String nickname;
 
     private List<CommentResDto> commentResDtoList = new ArrayList<>();
+    private List<HeartNicknameResDto> heartResDtoList = new ArrayList<>();
 
     public void updateCommentList(List<CommentResDto> commentsList) {
         this.commentResDtoList = commentsList;
+    }
+
+    public void updateHeartList(List<HeartNicknameResDto> heartNicknameResDto) {
+        this.heartResDtoList = heartNicknameResDto;
     }
 
     public BoardResDto(Board board) {
