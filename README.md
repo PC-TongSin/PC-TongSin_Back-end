@@ -27,11 +27,11 @@ Back To 90's!!!
 
 |이름|github|position|
 |------|---|---|
-|김성호|깃헙주소|팀장*FE|
-|조재신|깃헙주소|FE|
-|김연태|깃헙주소|BE|
-|장지윤|깃헙주소|BE|
-|김병기|깃헙주소|BE|
+|김성호|https://github.com/Sunghoman|팀장*FE|
+|조재신|https://github.com/1005jsc|FE|
+|김연태|https://github.com/eva0519|BE|
+|장지윤|https://github.com/Jaylin16|BE|
+|김병기|https://github.com/Eolkeun|BE|
 
  
  <h2>🛠기술 스택</h2>
