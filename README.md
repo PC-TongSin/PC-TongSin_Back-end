@@ -1,7 +1,6 @@
 # 📺PC-TongSin_Back-end
 피씨-통신 (Back-end)
 
----
 
 ![3조 발표메인](https://user-images.githubusercontent.com/113230019/199669530-49e841c1-51b7-445d-b208-af64321b2544.png)
 
@@ -19,7 +18,6 @@ Back To 90's!!!
  
  - 우리 프로젝트의 핵심은 웹소켓 채팅 구현입니다!
  
- ---
  
 <h2>📋프로젝트 기간</h2>
 
@@ -35,7 +33,6 @@ Back To 90's!!!
 |장지윤|깃헙주소|BE|
 |김병기|깃헙주소|BE|
 
----
  
  <h2>🛠기술 스택</h2>
  
@@ -49,7 +46,6 @@ Back To 90's!!!
  <h2>🌐서버</h2>
  <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white">
  
----
   
   <h2>API 명세서</h2>
   
@@ -59,7 +55,6 @@ Back To 90's!!!
   
   ![Untitled](https://user-images.githubusercontent.com/113230019/199675127-69273c27-640c-4a01-b7b0-d94e30a5d5f5.png)
 
----
 
   <details>
   <h2>🚀트러블 슈팅</h2>
