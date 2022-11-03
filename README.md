@@ -56,9 +56,9 @@ Back To 90's!!!
   ![Untitled](https://user-images.githubusercontent.com/113230019/199675127-69273c27-640c-4a01-b7b0-d94e30a5d5f5.png)
 
 
-  <details>
   <h2>🚀트러블 슈팅</h2>
   
+ <details>
  <summary>데이터 새로고침 이슈</summary>
  <div markdown="1">       
 
